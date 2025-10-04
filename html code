@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a56d4;
+      --secondary: #7209b7;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #4cc9f0;
+      --danger: #f72585;
+      --warning: #f8961e;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --border-radius: 12px;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--dark);
+      background-color: #f5f7ff;
+      padding: 0;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 20px 0;
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin-bottom: 30px;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      position: relative;
+    }
+
+    .logout-btn {
+      position: absolute;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .logout-btn:hover {
+      background: white;
+      color: var(--primary);
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-align: center;
+      margin: 0;
+    }
+
+    .icon {
+      font-size: 2rem;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .card-header {
+      background: linear-gradient(to right, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 15px 20px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+    input, select {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #ccc !important; /* darker border */
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+input:focus, select:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 4px rgba(67, 97, 238, 0.5) !important;
+}
+
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid var(--light-gray);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: var(--transition);
+      background-color: white;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+    }
+
+    .btn-secondary:hover {
+      background: #6511a0;
+    }
+
+    .btn-success {
+      background: var(--success);
+    }
+
+    .btn-success:hover {
+      background: #3ab3d9;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+    }
+
+    .btn-danger:hover {
+      background: #e01a6f;
+    }
+
+    .emp-details {
+      background: #e8f4fd;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      border-left: 4px solid var(--primary);
+    }
+
+    .emp-details p {
+      margin-bottom: 5px;
+    }
+
+    .table-container {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      margin-bottom: 30px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 800px;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    th {
+      background-color: var(--light);
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .action-buttons .btn {
+      width: auto;
+      padding: 12px 20px;
+    }
+
+    #spinner, #loginSpinner {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(3px);
+    }
+
+    .spinner-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .spinner-circle {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid var(--primary);
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #errorNotice {
+      background: #ffe6e6;
+      color: #d32f2f;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      text-align: center;
+      display: none;
+      border-left: 4px solid #d32f2f;
+    }
+
+    .filter-section {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .date-range {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .filter-section {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .date-range {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .action-buttons {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .card-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loginSpinner">
+    <div class="spinner-content">
+      <div class="spinner-circle"></div>
+      <p>Logging in...</p>
+    </div>
+  </div>
+
+  <div id="loginScreen" class="container" style="max-width: 450px; margin-top: 80px;">
+    <div class="card">
+      <div class="card-header">
+        <span>🔐</span>
+        <h2>Login to Attendance System</h2>
+      </div>
+      <div class="card-body">
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" required autocomplete="username">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" required autocomplete="current-password">
+          </div>
+
+          <button type="submit" class="btn">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="mainApp" style="display: none;">
+    <header style="margin-bottom: 0;">
+      <div class="container">
+        <div class="header-content">
+          <span class="icon">📋</span>
+          <h1>Company Attendance System</h1>
+          <button class="logout-btn" onclick="logout()">🔓 Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+    <div id="spinner">
+      <div class="spinner-content">
+        <div class="spinner-circle"></div>
+        <p>Processing...</p>
+      </div>
+    </div>
+
+    <div id="errorNotice"></div>
+
+    <div class="card-container">
+      <!-- Combined Attendance Form -->
+      <div class="card">
+        <div class="card-header">
+          <span>✅</span>
+          <h2>Mark Attendance</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label>Attendance Mode</label>
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+              <button type="button" class="btn" id="autoModeBtn" onclick="switchToAutoMode()" style="flex: 1;">Auto (Current Time)</button>
+              <button type="button" class="btn btn-secondary" id="manualModeBtn" onclick="switchToManualMode()" style="flex: 1; background: var(--gray);">Manual Entry</button>
+            </div>
+          </div>
+
+          <form id="attendanceForm">
+            <div class="form-group">
+              <label for="employeeIdSelect">Employee ID</label>
+              <select id="employeeIdSelect" required onchange="handleEmployeeIdSelection()"></select>
+            </div>
+
+            <div class="emp-details" id="empDetails" style="display:none;"></div>
+
+            <div id="attendanceStatus" style="display:none; background: #fff3cd; padding: 12px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #ffc107;"></div>
+
+            <div id="manualFields" style="display:none;">
+              <div class="form-group">
+                <label for="manualDate">Date *</label>
+                <input type="date" name="date" id="manualDate">
+              </div>
+
+              <div class="form-group">
+                <label for="manualEntryTime">Entry Time *</label>
+                <input type="time" name="entryTime" id="manualEntryTime">
+              </div>
+
+              <div class="form-group">
+                <label for="manualExitTime">Exit Time (Optional)</label>
+                <input type="time" name="exitTime" id="manualExitTime">
+              </div>
+            </div>
+
+            <button type="submit" id="markAttendanceBtn" class="btn">Mark Attendance</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Add/Update Employee Form -->
+      <div class="card">
+        <div class="card-header">
+          <span>➕</span>
+          <h2>Add / Update Employee</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="searchEmpId">Search Employee by ID (Optional)</label>
+            <select id="searchEmpId" onchange="loadEmployeeForEdit()">
+              <option value="">-- Select Employee ID to Update --</option>
+            </select>
+          </div>
+
+          <form id="employeeForm">
+            <input type="hidden" id="empIdHidden" value="">
+
+            <div class="form-group">
+              <label for="empName">Employee Name</label>
+              <input type="text" name="name" id="empName" required style="text-transform:uppercase;">
+            </div>
+
+            <div class="form-group">
+              <label for="empCategory">Category</label>
+              <input type="text" name="category" id="empCategory" required style="text-transform:uppercase;">
+            </div>
+
+            <div class="form-group">
+              <label for="empAdhar">Adhar Number</label>
+              <input type="number" name="adhar" id="empAdhar" maxlength="12" required>
+            </div>
+
+            <div class="form-group">
+              <label for="empMobile">Mobile Number</label>
+              <input type="tel" name="mobile" id="empMobile" maxlength="10" required>
+            </div>
+
+            <div class="action-buttons">
+              <button type="submit" class="btn" id="saveEmployeeBtn">Save Employee</button>
+              <button type="button" class="btn btn-secondary" onclick="clearEmployeeForm()" style="background: var(--gray);">Clear Form</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Records -->
+    <div class="card">
+      <div class="card-header">
+        <span>📊</span>
+        <h2>View Attendance Records</h2>
+      </div>
+      <div class="card-body">
+        <form id="recordForm" onsubmit="return false;">
+          <div class="filter-section">
+            <div>
+              <div class="form-group">
+                <label for="recordDate">Select Date</label>
+                <input placeholder="dd/mm/yyyy" type="date" id="recordDate">
+              </div>
+              <button type="button" class="btn btn-secondary" onclick="loadByDate()">Show Attendance Record</button>
+            </div>
+            
+            <div>
+              <div class="form-group">
+                <label for="filterEmployee">Filter by Employee</label>
+                <select id="filterEmployee"></select>
+              </div>
+              
+              <div class="date-range">
+                <div class="form-group">
+                  <label for="fromDate">From</label>
+                  <input type="date" id="fromDate">
+                </div>
+                
+                <div class="form-group">
+                  <label for="toDate">To</label>
+                  <input type="date" id="toDate">
+                </div>
+              </div>
+              
+              <button type="button" class="btn btn-secondary" onclick="loadByEmployee()">Show Employee Attendance Record</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      <table id="recordTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Employee ID</th>
+            <th>Employee</th>
+            <th>Category</th>
+            <th>Adhar</th>
+            <th>Mobile</th>
+            <th>Entry</th>
+            <th>Exit</th>
+            <th>Total Hours</th>
+            <th>Duty</th>
+            <th>OT</th>
+            <th>Month-Year</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Download buttons -->
+    <div class="action-buttons">
+      <button type="button" class="btn btn-success" onclick="downloadExcel()">⬇️ Download Excel</button>
+      <button type="button" class="btn btn-danger" onclick="downloadPDF()">⬇️ Download PDF</button>
+    </div>
+    </div>
+  </div>
+
+  <!-- SweetAlert2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    // wrap init in window.load but export needed functions to window for inline onclick
+    window.addEventListener('load', function init() {
+      let isLoggedIn = false;
+
+      if (!window.google || !google.script || !google.script.run) {
+        document.getElementById('errorNotice').style.display = 'block';
+        document.getElementById('errorNotice').textContent =
+          'This page must be served via Google Apps Script. Do not open the file directly in browser. Deploy the script as a Web App or open via the Apps Script editor preview.';
+        console.error('google.script.run not available. Open this page from Apps Script web app.');
+        return;
+      }
+
+      const loginForm = document.getElementById("loginForm");
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (!username || !password) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Required Fields',
+            text: 'Please enter username and password',
+            confirmButtonColor: '#4361ee'
+          });
+          return;
+        }
+
+        document.getElementById("loginSpinner").style.display = "flex";
+        google.script.run
+          .withSuccessHandler(res => {
+            document.getElementById("loginSpinner").style.display = "none";
+            if (res && res.success) {
+              isLoggedIn = true;
+              document.getElementById("loginScreen").style.display = "none";
+              document.getElementById("mainApp").style.display = "block";
+              Swal.fire({
+                icon: 'success',
+                title: 'Welcome!',
+                text: 'Login successful',
+                confirmButtonColor: '#4361ee',
+                timer: 1500
+              });
+              initializeApp();
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Login Failed',
+                text: res.error || 'Invalid username or password',
+                confirmButtonColor: '#4361ee'
+              });
+            }
+          })
+          .withFailureHandler(err => {
+            document.getElementById("loginSpinner").style.display = "none";
+            console.error("Login error:", err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Server Error',
+              text: 'Server error: ' + (err && err.message ? err.message : JSON.stringify(err)),
+              confirmButtonColor: '#4361ee'
+            });
+          })
+          .verifyPassword(username, password);
+      });
+
+      function showSpinner(show) {
+        document.getElementById("spinner").style.display = show ? "flex" : "none";
+      }
+
+      window.logout = function() {
+        Swal.fire({
+          title: 'Logout',
+          text: 'Are you sure you want to logout?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#4361ee',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: 'Yes, Logout',
+          cancelButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            isLoggedIn = false;
+            document.getElementById("mainApp").style.display = "none";
+            document.getElementById("loginScreen").style.display = "block";
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
+            Swal.fire({
+              icon: 'success',
+              title: 'Logged Out',
+              text: 'You have been logged out successfully',
+              confirmButtonColor: '#4361ee',
+              timer: 1500
+            });
+          }
+        });
+      };
+
+      function initializeApp() {
+      const lastData = { arr: [] };
+      let employeeMap = {};
+      let isManualMode = false;
+
+      window.switchToAutoMode = function() {
+        isManualMode = false;
+        document.getElementById("autoModeBtn").style.background = "var(--primary)";
+        document.getElementById("manualModeBtn").style.background = "var(--gray)";
+        document.getElementById("manualFields").style.display = "none";
+        document.getElementById("attendanceStatus").style.display = "none";
+        document.getElementById("markAttendanceBtn").textContent = "Mark Attendance";
+        document.getElementById("markAttendanceBtn").disabled = false;
+        document.getElementById("manualDate").removeAttribute("required");
+        document.getElementById("manualEntryTime").removeAttribute("required");
+        if (document.getElementById("employeeIdSelect").value) {
+          handleEmployeeIdSelection();
+        }
+      };
+
+      window.switchToManualMode = function() {
+        isManualMode = true;
+        document.getElementById("autoModeBtn").style.background = "var(--gray)";
+        document.getElementById("manualModeBtn").style.background = "var(--secondary)";
+        document.getElementById("manualFields").style.display = "block";
+        document.getElementById("attendanceStatus").style.display = "none";
+        document.getElementById("markAttendanceBtn").textContent = "Save Manual Attendance";
+        document.getElementById("markAttendanceBtn").disabled = false;
+        document.getElementById("manualDate").setAttribute("required", "required");
+        document.getElementById("manualEntryTime").setAttribute("required", "required");
+        document.getElementById("empDetails").style.display = "none";
+      };
+
+
+      // -------------------------
+      // Attendance Form Handler
+      // -------------------------
+      const attendanceForm = document.getElementById("attendanceForm");
+      attendanceForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (isManualMode) {
+          submitManualAttendance();
+        } else {
+          quickMarkAttendance();
+        }
+      });
+
+      function submitManualAttendance() {
+        const empId = document.getElementById("employeeIdSelect").value;
+
+        if (!empId) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Required',
+            text: 'Please select an Employee ID',
+            confirmButtonColor: '#4361ee'
+          });
+          return;
+        }
+
+        if (!employeeMap[empId]) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Employee data not found',
+            confirmButtonColor: '#4361ee'
+          });
+          return;
+        }
+
+        const emp = employeeMap[empId];
+
+        const entryTime = document.getElementById("manualEntryTime").value;
+        const exitTime = document.getElementById("manualExitTime").value;
+        const date = document.getElementById("manualDate").value;
+
+        if (!date || !entryTime) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Required Fields',
+            text: 'Please fill in date and entry time',
+            confirmButtonColor: '#4361ee'
+          });
+          return;
+        }
+
+        function convertTo12Hr(time24) {
+          if (!time24) return "";
+          const [hours24, minutes] = time24.split(':');
+          let hours = parseInt(hours24);
+          const ampm = hours >= 12 ? 'PM' : 'AM';
+          hours = hours % 12;
+          hours = hours ? hours : 12;
+          return hours + ':' + minutes + ' ' + ampm;
+        }
+
+        const payload = {
+          name: emp.name,
+          category: emp.category,
+          adhar: emp.adhar,
+          mobile: emp.mobile,
+          date: date,
+          entryTime: convertTo12Hr(entryTime),
+          exitTime: convertTo12Hr(exitTime)
+        };
+
+        showSpinner(true);
+        google.script.run
+          .withSuccessHandler(res => {
+            showSpinner(false);
+            if (res && res.success) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: res.message || 'Manual attendance saved successfully!',
+                confirmButtonColor: '#4361ee'
+              });
+              attendanceForm.reset();
+              document.getElementById("empDetails").style.display = "none";
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: res.error || 'Error saving manual attendance',
+                confirmButtonColor: '#4361ee'
+              });
+            }
+          })
+          .withFailureHandler(err => {
+            showSpinner(false);
+            console.error("Server error (markManualAttendance):", err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Server Error',
+              text: 'Server error: ' + (err && err.message ? err.message : JSON.stringify(err)),
+              confirmButtonColor: '#4361ee'
+            });
+          })
+          .markManualAttendance(payload);
+      }
+
+      // -------------------------
+      // Load Employee for Edit
+      // -------------------------
+      window.loadEmployeeForEdit = function loadEmployeeForEdit() {
+        const empId = document.getElementById("searchEmpId").value;
+
+        if (!empId) {
+          clearEmployeeForm();
+          return;
+        }
+
+        showSpinner(true);
+        google.script.run
+          .withSuccessHandler(response => {
+            showSpinner(false);
+            if (response.success && response.employee) {
+              const emp = response.employee;
+
+              document.getElementById("empIdHidden").value = emp.empId;
+              document.getElementById("empName").value = emp.name;
+              document.getElementById("empCategory").value = emp.category;
+              document.getElementById("empAdhar").value = emp.adhar;
+              document.getElementById("empMobile").value = emp.mobile;
+
+              document.getElementById("saveEmployeeBtn").textContent = "Update Employee";
+
+              Swal.fire({
+                icon: 'info',
+                title: 'Employee Loaded',
+                text: `Editing ${emp.name}. Modify fields and click Update.`,
+                confirmButtonColor: '#4361ee',
+                timer: 2000
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Not Found',
+                text: response.error || 'Employee ID not found',
+                confirmButtonColor: '#4361ee'
+              });
+            }
+          })
+          .withFailureHandler(err => {
+            showSpinner(false);
+            console.error("Error fetching employee:", err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Server Error',
+              text: 'Failed to fetch employee: ' + (err && err.message ? err.message : JSON.stringify(err)),
+              confirmButtonColor: '#4361ee'
+            });
+          })
+          .getEmployeeById(empId);
+      };
+
+      window.clearEmployeeForm = function clearEmployeeForm() {
+        document.getElementById("employeeForm").reset();
+        document.getElementById("empIdHidden").value = "";
+        document.getElementById("searchEmpId").value = "";
+        document.getElementById("saveEmployeeBtn").textContent = "Save Employee";
+      };
+
+      // -------------------------
+      // Add/Update Employee handler
+      // -------------------------
+      const employeeForm = document.getElementById("employeeForm");
+      employeeForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        try {
+          const form = Object.fromEntries(new FormData(this).entries());
+          form.name = (form.name || "").toUpperCase();
+          form.category = (form.category || "").toUpperCase();
+
+          const empIdHidden = document.getElementById("empIdHidden").value;
+
+          if (empIdHidden) {
+            form.empId = empIdHidden;
+
+            showSpinner(true);
+            google.script.run
+              .withSuccessHandler(res => {
+                showSpinner(false);
+                if (res && res.success) {
+                  const message = res.newEmployeeId
+                    ? `${res.message}<br><b>New Employee ID: ${res.newEmployeeId}</b>`
+                    : res.message || 'Employee updated successfully!';
+
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    html: message,
+                    confirmButtonColor: '#4361ee'
+                  });
+                  clearEmployeeForm();
+                  loadEmployees();
+                } else {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: res.error || 'Error updating employee',
+                    confirmButtonColor: '#4361ee'
+                  });
+                }
+              })
+              .withFailureHandler(err => {
+                showSpinner(false);
+                console.error("Server error (updateEmployee):", err);
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Server Error',
+                  text: 'Server error: ' + (err && err.message ? err.message : JSON.stringify(err)),
+                  confirmButtonColor: '#4361ee'
+                });
+              })
+              .updateEmployee(form);
+          } else {
+            showSpinner(true);
+            google.script.run
+              .withSuccessHandler(res => {
+                showSpinner(false);
+                if (res && res.success) {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    html: `Employee Saved Successfully!<br><b>Employee ID: ${res.employeeId}</b>`,
+                    confirmButtonColor: '#4361ee'
+                  });
+                  clearEmployeeForm();
+                  loadEmployees();
+                } else {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error saving employee: ' + (res && res.error ? res.error : "unknown"),
+                    confirmButtonColor: '#4361ee'
+                  });
+                }
+              })
+              .withFailureHandler(err => {
+                showSpinner(false);
+                console.error("Server error (addEmployee):", err);
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Server Error',
+                  text: 'Server error: ' + (err && err.message ? err.message : JSON.stringify(err)),
+                  confirmButtonColor: '#4361ee'
+                });
+              })
+              .addEmployee(form);
+          }
+        } catch (err) {
+          showSpinner(false);
+          console.error(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Client Error',
+            text: 'Client error: ' + err.message,
+            confirmButtonColor: '#4361ee'
+          });
+        }
+      });
+
+      // -------------------------
+      // Load employees into selects
+      // -------------------------
+      function loadEmployees() {
+        showSpinner(true);
+        google.script.run
+          .withSuccessHandler(data => {
+            showSpinner(false);
+            const idSelect = document.getElementById("employeeIdSelect");
+            const searchSelect = document.getElementById("searchEmpId");
+            const filter = document.getElementById("filterEmployee");
+            idSelect.innerHTML = "<option value=''>--Select Employee ID--</option>";
+            searchSelect.innerHTML = "<option value=''>-- Select Employee ID to Update --</option>";
+            filter.innerHTML = "<option value=''>--Select--</option>";
+            employeeMap = {};
+            if (!data || !data.forEach) return;
+            data.forEach(emp => {
+              const opt = document.createElement("option");
+              opt.value = emp.empId;
+              opt.textContent = emp.empId;
+              opt.dataset.name = emp.name;
+              opt.dataset.category = emp.category;
+              opt.dataset.adhar = emp.adhar;
+              opt.dataset.mobile = emp.mobile;
+              idSelect.appendChild(opt);
+
+              const searchOpt = document.createElement("option");
+              searchOpt.value = emp.empId;
+              searchOpt.textContent = emp.empId;
+              searchSelect.appendChild(searchOpt);
+
+              const fopt = document.createElement("option");
+              fopt.value = emp.name;
+              fopt.textContent = emp.empId;
+              filter.appendChild(fopt);
+
+              employeeMap[emp.empId] = emp;
+            });
+          })
+          .withFailureHandler(err => {
+            showSpinner(false);
+            console.error("Server error (getEmployees):", err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error Loading Employees',
+              text: 'Failed to load employees: ' + (err && err.message ? err.message : JSON.stringify(err)),
+              confirmButtonColor: '#4361ee'
+            });
+          })
+          .getEmployees();
+      }
+
+      window.handleEmployeeIdSelection = function handleEmployeeIdSelection() {
+        try {
+          const empId = document.getElementById("employeeIdSelect").value;
+          const detailsDiv = document.getElementById("empDetails");
+          const statusDiv = document.getElementById("attendanceStatus");
+
+          if (!empId) {
+            detailsDiv.style.display = "none";
+            statusDiv.style.display = "none";
+            document.getElementById("markAttendanceBtn").disabled = false;
+            document.getElementById("markAttendanceBtn").textContent = "Mark Attendance";
+            return;
+          }
+
+          if (employeeMap[empId]) {
+            const emp = employeeMap[empId];
+
+            detailsDiv.innerHTML = `
+              <p><b>Employee Name:</b> ${emp.name}</p>
+              <p><b>Category:</b> ${emp.category}</p>
+              <p><b>Adhar:</b> ${emp.adhar}</p>
+              <p><b>Mobile:</b> ${emp.mobile}</p>
+            `;
+
+            if (!isManualMode) {
+              detailsDiv.style.display = "block";
+            }
+
+            if (!isManualMode) {
+              showSpinner(true);
+              google.script.run
+                .withSuccessHandler(result => {
+                  showSpinner(false);
+                  const now = new Date();
+                  let hours = now.getHours();
+                  const minutes = String(now.getMinutes()).padStart(2, '0');
+                  const ampm = hours >= 12 ? 'PM' : 'AM';
+                  hours = hours % 12;
+                  hours = hours ? hours : 12;
+                  const currentTime = hours + ':' + minutes + ' ' + ampm;
+
+                  if (result.exists) {
+                    if (result.exitTime) {
+                      statusDiv.innerHTML = `
+                        <p><b>✓ Attendance Already Complete</b></p>
+                        <p>Entry: ${result.entryTime} | Exit: ${result.exitTime}</p>
+                        <p style="color: #666; font-size: 0.9em;">This employee's attendance for today is already marked.</p>
+                      `;
+                      statusDiv.style.background = "#d4edda";
+                      statusDiv.style.borderLeft = "4px solid #28a745";
+                      document.getElementById("markAttendanceBtn").disabled = true;
+                    } else {
+                      statusDiv.innerHTML = `
+                        <p><b>📋 Entry Time Found</b></p>
+                        <p>Entry: <b>${result.entryTime}</b></p>
+                        <p style="color: #666; font-size: 0.9em;">Click button to mark exit at current time: <b>${currentTime}</b></p>
+                      `;
+                      statusDiv.style.background = "#fff3cd";
+                      statusDiv.style.borderLeft = "4px solid #ffc107";
+                      document.getElementById("markAttendanceBtn").disabled = false;
+                      document.getElementById("markAttendanceBtn").textContent = "Mark Exit Time";
+                    }
+                  } else {
+                    statusDiv.innerHTML = `
+                      <p><b>🕐 Ready to Mark Entry</b></p>
+                      <p style="color: #666; font-size: 0.9em;">Click button to mark entry at current time: <b>${currentTime}</b></p>
+                    `;
+                    statusDiv.style.background = "#d1ecf1";
+                    statusDiv.style.borderLeft = "4px solid #17a2b8";
+                    document.getElementById("markAttendanceBtn").disabled = false;
+                    document.getElementById("markAttendanceBtn").textContent = "Mark Entry Time";
+                  }
+                  statusDiv.style.display = "block";
+                })
+                .withFailureHandler(err => {
+                  showSpinner(false);
+                  console.error("Error checking attendance:", err);
+                  statusDiv.style.display = "none";
+                })
+                .getTodayAttendance(emp.name);
+            }
+          } else {
+            detailsDiv.style.display = "none";
+            statusDiv.style.display = "none";
+          }
+        } catch (err) {
+          console.error("handleEmployeeIdSelection error", err);
+        }
+      };
+
+      window.quickMarkAttendance = function quickMarkAttendance() {
+        const empId = document.getElementById("employeeIdSelect").value;
+
+        if (!empId) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Required',
+            text: 'Please select an Employee ID',
+            confirmButtonColor: '#4361ee'
+          });
+          return;
+        }
+
+        if (!employeeMap[empId]) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Employee data not found',
+            confirmButtonColor: '#4361ee'
+          });
+          return;
+        }
+
+        const emp = employeeMap[empId];
+        const payload = {
+          name: emp.name,
+          category: emp.category,
+          adhar: emp.adhar,
+          mobile: emp.mobile
+        };
+
+        const btn = document.getElementById("markAttendanceBtn");
+        btn.disabled = true;
+        showSpinner(true);
+        google.script.run
+          .withSuccessHandler(res => {
+            showSpinner(false);
+            btn.disabled = false;
+            if (res && res.success) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: res.message || 'Attendance marked successfully!',
+                confirmButtonColor: '#4361ee'
+              });
+              handleEmployeeIdSelection();
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: res.message || res.error || 'Error marking attendance',
+                confirmButtonColor: '#4361ee'
+              });
+            }
+          })
+          .withFailureHandler(err => {
+            showSpinner(false);
+            btn.disabled = false;
+            console.error("Server error (markAttendance):", err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Server Error',
+              text: 'Server error: ' + (err && err.message ? err.message : JSON.stringify(err)),
+              confirmButtonColor: '#4361ee'
+            });
+          })
+          .markAttendance(payload);
+      };
+
+      // -------------------------
+      // Load attendance by date
+      // -------------------------
+      window.loadByDate = function loadByDate() {
+        const date = document.getElementById("recordDate").value;
+        if (!date) { 
+          Swal.fire({
+            icon: 'warning',
+            title: 'Selection Required',
+            text: 'Please select a date',
+            confirmButtonColor: '#4361ee'
+          });
+          return; 
+        }
+        showSpinner(true);
+        google.script.run
+          .withSuccessHandler(data => {
+            showSpinner(false);
+            lastData.arr = data || [];
+            fillTable(lastData.arr);
+            if (data && data.length > 0) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Records Loaded',
+                text: `Found ${data.length} attendance records`,
+                confirmButtonColor: '#4361ee',
+                timer: 1500
+              });
+            } else {
+              Swal.fire({
+                icon: 'info',
+                title: 'No Records',
+                text: 'No attendance records found for the selected date',
+                confirmButtonColor: '#4361ee'
+              });
+            }
+          })
+          .withFailureHandler(err => {
+            showSpinner(false);
+            console.error("Server error (getAttendanceByDate):", err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Server Error',
+              text: 'Server error: ' + (err && err.message ? err.message : JSON.stringify(err)),
+              confirmButtonColor: '#4361ee'
+            });
+          })
+          .getAttendanceByDate(date);
+      };
+
+      // -------------------------
+      // Load attendance by employee + range
+      // -------------------------
+      window.loadByEmployee = function loadByEmployee() {
+        const name = document.getElementById("filterEmployee").value;
+        const fromDate = document.getElementById("fromDate").value;
+        const toDate = document.getElementById("toDate").value;
+        if (!name || !fromDate || !toDate) { 
+          Swal.fire({
+            icon: 'warning',
+            title: 'Selection Required',
+            text: 'Please select all fields',
+            confirmButtonColor: '#4361ee'
+          });
+          return; 
+        }
+        showSpinner(true);
+        google.script.run
+          .withSuccessHandler(data => {
+            showSpinner(false);
+            lastData.arr = data || [];
+            fillTable(lastData.arr);
+            if (data && data.length > 0) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Records Loaded',
+                text: `Found ${data.length} attendance records for ${name}`,
+                confirmButtonColor: '#4361ee',
+                timer: 1500
+              });
+            } else {
+              Swal.fire({
+                icon: 'info',
+                title: 'No Records',
+                text: `No attendance records found for ${name} in the selected date range`,
+                confirmButtonColor: '#4361ee'
+              });
+            }
+          })
+          .withFailureHandler(err => {
+            showSpinner(false);
+            console.error("Server error (getAttendanceByEmployee):", err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Server Error',
+              text: 'Server error: ' + (err && err.message ? err.message : JSON.stringify(err)),
+              confirmButtonColor: '#4361ee'
+            });
+          })
+          .getAttendanceByEmployee(name, fromDate, toDate);
+      };
+
+      // -------------------------
+      // Fill table
+      // -------------------------
+      function fillTable(data) {
+        const tbody = document.querySelector("#recordTable tbody");
+        tbody.innerHTML = "";
+        if (!data || data.length === 0) {
+          const tr = document.createElement("tr");
+          const td = document.createElement("td");
+          td.colSpan = 12;
+          td.textContent = "No records found";
+          td.style.textAlign = "center";
+          td.style.padding = "20px";
+          td.style.color = "#999";
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+          return;
+        }
+        data.forEach(r => {
+          const tr = document.createElement("tr");
+          r.forEach((c, idx) => {
+            const td = document.createElement("td");
+
+            // Format Entry Time (column 5) and Exit Time (column 6)
+            if (idx === 5 || idx === 6) {
+              td.textContent = formatTimeTo12Hr(c) || "";
+            }
+            // Format Total Hours (column 7) and OT (column 9) to 2 decimal places
+            else if (idx === 7 || idx === 9) {
+              const num = parseFloat(c);
+              td.textContent = !isNaN(num) ? num.toFixed(2) : (c || "");
+            }
+            else {
+              td.textContent = c || "";
+            }
+
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+      }
+
+      // Helper function to format time to 12-hour format
+      function formatTimeTo12Hr(timeVal) {
+        if (!timeVal || timeVal === "") return "";
+
+        try {
+          let timeStr = String(timeVal).trim();
+
+          // If already in 12-hour format, check and remove seconds if present
+          if (timeStr.match(/\d{1,2}:\d{2}(:\d{2})?\s*(AM|PM)/i)) {
+            const match = timeStr.match(/(\d{1,2}):(\d{2})(:\d{2})?\s*(AM|PM)/i);
+            if (match) {
+              return match[1] + ":" + match[2] + " " + match[4].toUpperCase();
+            }
+            return timeStr;
+          }
+
+          // If in 24-hour format
+          if (timeStr.match(/^\d{1,2}:\d{2}(:\d{2})?$/)) {
+            const parts = timeStr.split(":");
+            let hours = parseInt(parts[0]);
+            const minutes = parts[1];
+            const ampm = hours >= 12 ? "PM" : "AM";
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            return hours + ":" + minutes + " " + ampm;
+          }
+
+          // If it's a full date/time string (GMT format)
+          if (timeStr.includes("GMT") || timeStr.includes("T")) {
+            const d = new Date(timeStr);
+            if (!isNaN(d)) {
+              let hours = d.getHours();
+              const minutes = String(d.getMinutes()).padStart(2, "0");
+              const ampm = hours >= 12 ? "PM" : "AM";
+              hours = hours % 12;
+              hours = hours ? hours : 12;
+              return hours + ":" + minutes + " " + ampm;
+            }
+          }
+
+          return timeStr;
+        } catch (e) {
+          return String(timeVal);
+        }
+      }
+
+      // -------------------------
+      // Exports
+      // -------------------------
+      window.downloadExcel = function downloadExcel() {
+        if (!lastData.arr || !lastData.arr.length) { 
+          Swal.fire({
+            icon: 'warning',
+            title: 'No Data',
+            text: 'No records to export',
+            confirmButtonColor: '#4361ee'
+          });
+          return; 
+        }
+        showSpinner(true);
+        google.script.run
+          .withSuccessHandler(url => {
+            showSpinner(false);
+            Swal.fire({
+              icon: 'success',
+              title: 'Download Started',
+              text: 'Your Excel file is being downloaded',
+              confirmButtonColor: '#4361ee',
+              timer: 1500
+            });
+            window.open(url, "_blank");
+          })
+          .withFailureHandler(err => {
+            showSpinner(false);
+            console.error("Server error (exportAttendanceToExcel):", err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Server Error',
+              text: 'Server error: ' + (err && err.message ? err.message : JSON.stringify(err)),
+              confirmButtonColor: '#4361ee'
+            });
+          })
+          .exportAttendanceToExcel(lastData.arr);
+      };
+
+      window.downloadPDF = function downloadPDF() {
+        if (!lastData.arr || !lastData.arr.length) { 
+          Swal.fire({
+            icon: 'warning',
+            title: 'No Data',
+            text: 'No records to export',
+            confirmButtonColor: '#4361ee'
+          });
+          return; 
+        }
+        showSpinner(true);
+        google.script.run
+          .withSuccessHandler(url => {
+            showSpinner(false);
+            Swal.fire({
+              icon: 'success',
+              title: 'Download Started',
+              text: 'Your PDF file is being downloaded',
+              confirmButtonColor: '#4361ee',
+              timer: 1500
+            });
+            window.open(url, "_blank");
+          })
+          .withFailureHandler(err => {
+            showSpinner(false);
+            console.error("Server error (exportAttendanceToPDF):", err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Server Error',
+              text: 'Server error: ' + (err && err.message ? err.message : JSON.stringify(err)),
+              confirmButtonColor: '#4361ee'
+            });
+          })
+          .exportAttendanceToPDF(lastData.arr);
+      };
+
+      // boot
+      loadEmployees();
+      }
+    });
+  </script>
+</body>
+</html>
