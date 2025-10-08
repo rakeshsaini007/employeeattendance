@@ -405,7 +405,7 @@ function getAttendanceByEmployee(name, fromDate, toDate) {
     const result = [];
     for (let i = 1; i < data.length; i++) {
       const rowDate = _cellToDateString(data[i][0]);
-      const empName = data[i][1];
+      const empName = data[i][2];
       if (empName === name && rowDate >= fromDate && rowDate <= toDate) {
         result.push(_formatRowForClient(data[i]));
       }
