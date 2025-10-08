@@ -1306,14 +1306,18 @@ input:focus, select:focus {
           r.forEach((c, idx) => {
             const td = document.createElement("td");
 
-            // Format Entry Time (column 5) and Exit Time (column 6)
-            if (idx === 5 || idx === 6) {
+            // Format Entry Time (column 6) and Exit Time (column 7)
+            if (idx === 6 || idx === 7) {
               td.textContent = formatTimeTo12Hr(c) || "";
             }
-            // Format Total Hours (column 7) and OT (column 9) to 2 decimal places
-            else if (idx === 7 || idx === 9) {
+            // Format Total Hours (column 8) and OT (column 10) to 2 decimal places
+            else if (idx === 8 || idx === 10) {
               const num = parseFloat(c);
               td.textContent = !isNaN(num) ? num.toFixed(2) : (c || "");
+            }
+            // Format Month-Year (column 11) to MMM-yyyy format
+            else if (idx === 11) {
+              td.textContent = formatMonthYear(c) || "";
             }
             else {
               td.textContent = c || "";
@@ -1368,6 +1372,31 @@ input:focus, select:focus {
           return timeStr;
         } catch (e) {
           return String(timeVal);
+        }
+      }
+
+      // Helper function to format Month-Year to MMM-yyyy format
+      function formatMonthYear(dateVal) {
+        if (!dateVal || dateVal === "") return "";
+
+        try {
+          const dateStr = String(dateVal).trim();
+
+          // If already in MMM-yyyy format, return as is
+          if (dateStr.match(/^[A-Z][a-z]{2}-\d{4}$/i)) {
+            return dateStr;
+          }
+
+          // Try to parse as date
+          const d = new Date(dateVal);
+          if (!isNaN(d)) {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return months[d.getMonth()] + '-' + d.getFullYear();
+          }
+
+          return dateStr;
+        } catch (e) {
+          return String(dateVal);
         }
       }
 
